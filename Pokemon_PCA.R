@@ -31,7 +31,7 @@ for (i in 1:876) {
   PKM_types_7_number[i] <- str_split(PKM_types_7, "\\|")[[i]][[3]]
 }
 
-# Remove Pokemon number with letters
+# Remove Pokemon number containing letters
 position_without_letters <- str_detect(PKM_types_7_number, "^[0-9]*$")
 PKM_types_7_number_without_letters <- PKM_types_7_number[position_without_letters]
 
@@ -99,6 +99,7 @@ legend_number <- c(144:146, 150:151,
 legend <- rep(F, nrow(p1_p2_table))
 legend_position <- which(PKM_merged_df[, "Number"] %in% legend_number)
 legend[legend_position] <- rep(T, length(legend_position))
+
 p1_p2_table_t <- cbind(p1_p2_table, 
                      Number = PKM_merged_df[, "Number"],
                      Name = PKM_merged_df[, "Name"],
@@ -110,7 +111,6 @@ p1_p2_table_t <- cbind(p1_p2_table,
 p1_p2_table_t[, "generation"] <- as.character(p1_p2_table_t[, "generation"])
 
 # Visualization
-# label with generation
 pca_gg <- ggplot(data = p1_p2_table_t, aes(x=PC1, y=PC2, label = Number))+
   geom_point(size = 2.5)
 # label with generation
