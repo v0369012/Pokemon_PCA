@@ -120,7 +120,7 @@ pca_gg_generation <- ggplot(data = p1_p2_table_t, aes(x=PC1, y=PC2, label = Numb
 pca_gg_types1 <- ggplot(data = p1_p2_table_t, aes(x=PC1, y=PC2, label = Number, color = types1))+
   geom_point(size = 2.5)
 # label with legend Pokemon
-pca_gg_legend <- ggplot(data = p1_p2_table_var, aes(x=PC1, y=PC2, label = Number, color = legend))+
+pca_gg_legend <- ggplot(data = p1_p2_table_t, aes(x=PC1, y=PC2, label = Number, color = legend))+
   geom_point(size = 2.5)
 
 # User-interactive visualization
