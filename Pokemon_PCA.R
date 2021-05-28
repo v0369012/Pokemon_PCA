@@ -2,7 +2,7 @@
 # setwd("~/GitHub/Pokemon_PCA")
 
 # Read Pokemon list
-PKM_values_7 <- readLines("Pokemon_list_g7.txt", encoding = "UTF-8")
+PKM_values_7 <- readLines("Pokemon_list_g7_TC.txt", encoding = "UTF-8")
 
 # To simplify the analysis
 # Remove Pokemons with special form, like mega, Alolan...
@@ -59,9 +59,6 @@ PKM_types_7_df_t <- filter(PKM_types_7_df, Number %in% PKM_types_7_number_withou
 
 # Merge Pokemon table and types table by number
 PKM_merged_df <- merge(PKM_types_7_df_t, PKM_values_7_without_spf_df, by = "Number")
-# Remove Chinese names
-PKM_merged_df <- PKM_merged_df[,-4]
-colnames(PKM_merged_df)[2] <- "Name"
 
 # Check the correlation between the variables
 library(reshape2)
@@ -102,7 +99,7 @@ legend[legend_position] <- rep(T, length(legend_position))
 
 p1_p2_table_t <- cbind(p1_p2_table, 
                      Number = PKM_merged_df[, "Number"],
-                     Name = PKM_merged_df[, "Name"],
+                     Name = PKM_merged_df[, "Name.y"],
                      generation = PKM_merged_df["generation"],
                      types1 = PKM_merged_df[, "types1"],
                      legend = legend
@@ -111,16 +108,16 @@ p1_p2_table_t <- cbind(p1_p2_table,
 p1_p2_table_t[, "generation"] <- as.character(p1_p2_table_t[, "generation"])
 
 # Visualization
-pca_gg <- ggplot(data = p1_p2_table_t, aes(x=PC1, y=PC2, label = Number))+
+pca_gg <- ggplot(data = p1_p2_table_t, aes(x=PC1, y=PC2, label = Name))+
   geom_point(size = 2.5)
 # label with generation
-pca_gg_generation <- ggplot(data = p1_p2_table_t, aes(x=PC1, y=PC2, label = Number, color = generation))+
+pca_gg_generation <- ggplot(data = p1_p2_table_t, aes(x=PC1, y=PC2, label = Name, color = generation))+
   geom_point(size = 2.5)
 # label with first types
-pca_gg_types1 <- ggplot(data = p1_p2_table_t, aes(x=PC1, y=PC2, label = Number, color = types1))+
+pca_gg_types1 <- ggplot(data = p1_p2_table_t, aes(x=PC1, y=PC2, label = Name, color = types1))+
   geom_point(size = 2.5)
 # label with legend Pokemon
-pca_gg_legend <- ggplot(data = p1_p2_table_t, aes(x=PC1, y=PC2, label = Number, color = legend))+
+pca_gg_legend <- ggplot(data = p1_p2_table_t, aes(x=PC1, y=PC2, label = Name, color = legend))+
   geom_point(size = 2.5)
 
 # User-interactive visualization
